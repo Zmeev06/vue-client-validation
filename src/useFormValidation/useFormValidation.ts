@@ -59,6 +59,13 @@ export function useFormValidation(initialValues: Record<string, any>, rules: Rec
         }
     };
 
+    const resetForm = () => {
+        for (const key in initialValues) {
+            form[key].value = initialValues[key];
+            errors[key] = null;
+        }
+    };
+
     const isValid = computed(() => Object.values(errors).every((error) => !error));
 
     return {
@@ -67,5 +74,6 @@ export function useFormValidation(initialValues: Record<string, any>, rules: Rec
         isValid,
         validateField,
         validateForm,
+        resetForm,
     };
 }
