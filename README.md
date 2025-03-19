@@ -124,26 +124,43 @@ request({ url: "/users", method: "GET" }, false);
 
 ### 📌 Usage
 
-```ts
-import { useFormValidation } from "vue-api-client-form-validation";
-import { ref } from "vue";
+```vue
+<template>
+  <input
+      v-model="form.name.value"
+      type="text"
+  >
+  <input
+      v-model="form.phone.value"
+      type="text"
+  >
+</template>
+<script setup>
+  import { useFormValidation } from "vue-api-client-form-validation";
+  import { ref } from "vue";
 
-const formData = ref({ name: "", email: "", phone: "" });
+  const formData = ref({ name: "", email: "", phone: "" });
 
-const { form, errors, isValid, validateForm, validateField } = useFormValidation(
-  formData,
-  {
-    name: { required: true },
-    email: { required: true, type: "email" },
-    phone: { required: true, type: "phone" }
-  }
-);
+  const {
+    form, errors, isValid, validateForm, resetForm
+  } = useFormValidation(
+      {
+        name: { value: '' },
+        phone: { value: '' },
+      },
+      {
+        name: { required: true },
+        phone: { required: true, type: 'phone' },
+      }
+  )
 
-const onSubmit = () => {
-  if (validateForm()) {
-    console.log("Form submitted", form.value);
-  }
-};
+  const onSubmit = () => {
+    if (validateForm()) {
+      console.log("Form submitted", form.value);
+      resetForm()
+    }
+  };
+</script>
 ```
 
 ### 📜 Parameters
