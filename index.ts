@@ -1,3 +1,3 @@
-export { useApiClient } from './src/useApiClient'
-export { setApiConfig } from './src/useApiClient'
-export { useFormValidation } from "./src/useFormValidation/useFormValidation.js";
+export { useApiClient } from './src/useApiClient/useApiClient'
+export { setApiConfig } from './src/useApiClient/useApiClient'
+export { useFormValidation } from "./src/useFormValidation/useFormValidation";
