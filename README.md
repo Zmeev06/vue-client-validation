@@ -28,10 +28,11 @@ In the root of your project, create a file named **`apiConfig.ts`** and set up t
 import { setApiConfig } from "vue-api-client-form-validation";
 
 setApiConfig({
-  baseURL: "https://api.example.com", // Replace with your API base URL
-  headers: {
-    Authorization: "Bearer your-token", // Set default headers if needed
-  },
+    baseURL: "https://api.example.com", // Replace with your API base URL
+    headers: {
+        Authorization: "Bearer your-token", // Set default headers if needed
+    },
+    cacheTime: 60000, // Cache time in milliseconds (default: 60s)
 });
 ```
 
@@ -52,12 +53,13 @@ By doing this, all API requests will automatically use the configured `baseURL` 
 
 # 📌 `useApiClient` – API Client
 
-`useApiClient` is a composable that allows you to easily make HTTP requests.
+`useApiClient` is a composable that allows you to easily make HTTP requests with built-in caching.
 
 ## ✅ Features:
 - `GET`, `POST`, `PUT`, `DELETE` requests
 - Reactive loading and error state
 - Automatically uses the configured `baseURL` and headers
+- Built-in caching with configurable expiration time
 
 ### 📌 Usage
 
@@ -65,7 +67,7 @@ By doing this, all API requests will automatically use the configured `baseURL` 
 import { useApiClient } from "vue-api-client-form-validation";
 import { onMounted } from "vue";
 
-const { data, status, isLoading, error, request } = useApiClient();
+const { data, status, isLoading, error, request, clearCache } = useApiClient();
 
 onMounted(() => {
   request({
@@ -83,6 +85,7 @@ onMounted(() => {
 | `data`     | `object`             | Request data (for `POST`, `PUT`) |
 | `headers`  | `object`             | Additional headers |
 | `params`   | `object`             | URL parameters |
+| `useCache` | `boolean` (default: `true`) | Whether to use cache |
 
 ### 🔄 Reactive Data
 | Variable   | Type     | Description |
@@ -91,6 +94,20 @@ onMounted(() => {
 | `status`   | `Ref<number>` | HTTP status code |
 | `isLoading` | `Ref<boolean>` | Loading indicator |
 | `error`    | `Ref<string>` | Request error |
+
+### 🔧 Cache Management
+`useApiClient` includes a caching mechanism that stores responses to avoid redundant requests. The cache expiration time can be configured via `cacheTime` in `setApiConfig`.
+
+#### Clear Cache Manually
+```ts
+const { clearCache } = useApiClient();
+clearCache(); // Clears all cached API responses
+```
+
+#### Disable Cache for a Specific Request
+```ts
+request({ url: "/users", method: "GET" }, false);
+```
 
 ---
 
@@ -147,8 +164,19 @@ const { form, errors, validateForm } = useFormValidation(
 
 ---
 
+# 🔗 GitHub Repository
+For more details, visit the official GitHub repository:
+👉 [GitHub Repository](https://github.com/Zmeev06/vue-client-validation)
+
+---
+
 # 🎯 Conclusion
 
 This package makes working with APIs and validating forms in Vue 3 easy! 🚀
 
-Now, you can set up your API configuration once and use `useApiClient` without worrying about manually specifying `baseURL` and headers every time. 🎯
+- Easily configure API requests with automatic `baseURL` and headers
+- Use built-in caching for optimized performance
+- Implement form validation with built-in and custom rules
+
+Start using `vue-api-client-form-validation` today! 🎯
+
