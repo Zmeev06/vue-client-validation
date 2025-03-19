@@ -65,16 +65,18 @@ By doing this, all API requests will automatically use the configured `baseURL` 
 
 ```ts
 import { useApiClient } from "vue-api-client-form-validation";
-import { onMounted } from "vue";
+import { ref } from "vue";
 
 const { data, status, isLoading, error, request, clearCache } = useApiClient();
+const formData = ref({ name: "", email: "" });
 
-onMounted(() => {
-  request({
-    url: "/users",
-    method: "GET",
-  });
-});
+const onSubmit = () => {
+    request({
+        url: "/users",
+        method: "POST",
+        data: formData.value
+    });
+};
 ```
 
 ### 📜 Parameters
@@ -124,14 +126,24 @@ request({ url: "/users", method: "GET" }, false);
 
 ```ts
 import { useFormValidation } from "vue-api-client-form-validation";
+import { ref } from "vue";
+
+const formData = ref({ name: "", email: "", phone: "" });
 
 const { form, errors, isValid, validateForm, validateField } = useFormValidation(
-  { name: "", email: "" },
+  formData,
   {
     name: { required: true },
-    email: { required: true },
+    email: { required: true, type: "email" },
+    phone: { required: true, type: "phone" }
   }
 );
+
+const onSubmit = () => {
+  if (validateForm()) {
+    console.log("Form submitted", form.value);
+  }
+};
 ```
 
 ### 📜 Parameters
@@ -161,6 +173,12 @@ const { form, errors, validateForm } = useFormValidation(
   }
 );
 ```
+
+### 📜 Supported Types
+| Type    | Description |
+|---------|-------------|
+| `email` | Validates an email format |
+| `phone` | Validates a phone number format |
 
 ---
 
