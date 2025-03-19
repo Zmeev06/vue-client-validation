@@ -1,0 +1,19 @@
+{
+  "name": "vue-api-client-form-validation",
+  "version": "0.1.2",
+  "description": "Universal Vue 3 composables for API requests and form validation with built-in rules and customization support.",
+  "main": "dist/index.cjs",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "prepare": "npm run build"
+  },
+  "dependencies": {
+    "axios": "^1.6.0",
+    "vue": "^3.3.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.2.2"
+  }
+}
