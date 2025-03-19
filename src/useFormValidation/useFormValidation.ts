@@ -8,7 +8,7 @@ interface ValidationRules {
     type?: "email" | "phone";
 }
 
-const emailRegex = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+const emailRegex = /^(?=.{1,254}$)(?:(?:[A-Za-z0-9!#$%&'*+\/=?^_`{|}~-]+(?:\.[A-Za-z0-9!#$%&'*+\/=?^_`{|}~-]+)*)|(?:"(?:\\.|[^"\\])*"))@(?:(?:[A-Za-z0-9-]{1,63}\.)*[A-Za-z0-9-]{1,63}\.[A-Za-z]{2,}|(?:\[(?:\d{1,3}\.){3}\d{1,3}\])|(?:\[IPv6:[a-fA-F0-9:]+\]))$/;
 const phoneRegex = /^\+?[0-9]{10,15}$/;
 
 export function useFormValidation(initialValues: Record<string, any>, rules: Record<string, ValidationRules>) {
