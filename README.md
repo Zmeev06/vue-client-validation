@@ -79,25 +79,15 @@ const onSubmit = () => {
 };
 ```
 
-### 📜 Parameters
-| Parameter  | Type                 | Description |
-|------------|---------------------|-------------|
-| `url`      | `string`             | API endpoint (relative to `baseURL`) |
-| `method`   | `string` (`GET`, `POST`, etc.) | HTTP method |
-| `data`     | `object`             | Request data (for `POST`, `PUT`) |
-| `headers`  | `object`             | Additional headers |
-| `params`   | `object`             | URL parameters |
-| `useCache` | `boolean` (default: `true`) | Whether to use cache |
+### 🌜 Parameters
+| Parameter        | Type                           | Description                        |
+|------------------|--------------------------------|------------------------------------|
+| `config`        | `AxiosRequestConfig`           | Axios request configuration, including `url`, `method`, `data`, `headers`, `params`, etc. |
+| `settings`      | `RequestSettings`              | Additional request settings. |
+| `settings.useCache`       | `boolean` (default: `true`)    | Determines whether to use caching for the request. |
+| `settings.cancelPrevious` | `boolean` (default: `false`)   | Cancels the previous request before executing a new one, preventing race conditions and reducing server load. Useful for autocomplete and dynamic updates. |
 
-### 🔄 Reactive Data
-| Variable   | Type     | Description |
-|------------|--------|-------------|
-| `data`     | `Ref<any>` | Server response |
-| `status`   | `Ref<number>` | HTTP status code |
-| `isLoading` | `Ref<boolean>` | Loading indicator |
-| `error`    | `Ref<string>` | Request error |
-
-### 🔧 Cache Management
+### 🛠️ Cache Management
 `useApiClient` includes a caching mechanism that stores responses to avoid redundant requests. The cache expiration time can be configured via `cacheTime` in `setApiConfig`.
 
 #### Clear Cache Manually
@@ -163,39 +153,19 @@ request({ url: "/users", method: "GET" }, false);
 </script>
 ```
 
-### 📜 Parameters
-| Parameter  | Type   | Description |
-|------------|------|-------------|
-| `form`    | `Ref<object>` | Reactive form data |
-| `errors`  | `Ref<object>` | Validation errors |
-| `isValid` | `Computed<boolean>` | Form validity |
+---
 
-### 🔄 Methods
-| Method         | Description |
-|--------------|-------------|
-| `validateField(field: string)` | Validate a single field |
-| `validateForm()` | Validate the entire form |
+# 🔄 Changelog
 
-### 🔧 Custom Rules
-```ts
-const { form, errors, validateForm } = useFormValidation(
-  { username: "" },
-  {
-    username: {
-      required: true,
-      customRules: [
-        (value) => (value.length >= 3 ? true : "Minimum 3 characters")
-      ]
-    }
-  }
-);
-```
+## v1.1.0
+- Added support for `cancelPrevious` to prevent race conditions.
+- Improved TypeScript typings for `useApiClient`.
+- Enhanced error handling for better debugging.
+- Updated caching mechanism for more efficient API requests.
 
-### 📜 Supported Types
-| Type    | Description |
-|---------|-------------|
-| `email` | Validates an email format |
-| `phone` | Validates a phone number format |
+## v1.0.0
+- Initial release with `useApiClient` and `useFormValidation`.
+- Supports caching, reactive states, and built-in validation rules.
 
 ---
 
